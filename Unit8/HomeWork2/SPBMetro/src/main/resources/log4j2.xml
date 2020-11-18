@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+    <appenders>
+
+        <File name="SearchFile" fileName="logs/search.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+        <File name="WrongInputFile" fileName="logs/wrongInput.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+        <File name="ErrorFile" fileName="logs/error.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+
+    </appenders>
+
+    <loggers>
+        <logger name='input_logger' level="info">]
+            <appender-ref ref="SearchFile" level="info" />
+        </logger>
+        <logger name='wrong_input_logger' level="warn">]
+            <appender-ref ref="WrongInputFile" level="warn" />
+        </logger>
+        <root name='error_logger'>]
+            <appender-ref ref="ErrorFile" level="error" />
+        </root>
+    </loggers>
+</configuration>
