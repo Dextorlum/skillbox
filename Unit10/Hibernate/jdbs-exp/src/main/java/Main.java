@@ -15,10 +15,25 @@ public class Main {
         SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
 
         Session session = sessionFactory.openSession();
+        Teacher teacher = session.get(Teacher.class, 1);
+        Student student = session.get(Student.class, 1);
+        Course course = session.get(Course.class, 1);
 
-        String sql = "from " + LinkPurchase.class.getSimpleName();
+        System.out.println("Переподаватель - " + teacher.getName());
+        teacher.getCoursesList().forEach(el -> System.out.println(el.getName()));
+        System.out.println();
 
-        System.out.println(sql);
+        System.out.println("Студент - " + student.getName());
+        student.getCourses().forEach(el -> System.out.println(el.getName()));
+        System.out.println();
+        
+        System.out.println("Курс - " + course.getName());
+        course.getStudents().forEach(el -> System.out.println(el.getName()));
+
+//        System.out.println(teacher.getName());
+//        String sql = "from " + LinkPurchase.class.getSimpleName();
+//
+//        System.out.println(sql);
         //List<Purchase> purchaselist = session.createQuery().list();
 
         //System.out.println(purchase.getStudentName());

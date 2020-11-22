@@ -1,4 +1,5 @@
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Teachers")
@@ -6,6 +7,15 @@ public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    private String name;
+
+    private int salary;
+
+    private int age;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    List<Course> coursesList;
 
     public int getId() {
         return id;
@@ -39,9 +49,12 @@ public class Teacher {
         this.age = age;
     }
 
-    private String name;
+    public List<Course> getCoursesList() {
+        return coursesList;
+    }
 
-    private int salary;
+    public void setCoursesList(List<Course> coursesList) {
+        this.coursesList = coursesList;
+    }
 
-    private int age;
 }

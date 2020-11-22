@@ -3,7 +3,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "students")
+@Table(name = "Students")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,7 @@ public class Student {
             )
     private List<Course> courses;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
     private List<Subscription> subscriptions;
 
     public int getId() {

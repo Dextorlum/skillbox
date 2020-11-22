@@ -1,13 +1,12 @@
-import SubscriptionId.SubscriptionId;
-
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "subscriptions")
+@Table(name = "Subscriptions")
 public class Subscription {
+
     @EmbeddedId
-    private SubscriptionId id;
+    private KeyId id;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @MapsId("studentId")

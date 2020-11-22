@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class LinkPurchaseId  implements Serializable {
+public class KeyId implements Serializable {
 
     @Column(name = "student_id")
     private int studentId;
@@ -12,10 +12,10 @@ public class LinkPurchaseId  implements Serializable {
     @Column(name = "course_id")
     private int courseId;
 
-    private LinkPurchaseId() {}
+    private KeyId() {}
 
-    public LinkPurchaseId(
-            int courseId,
+    public KeyId(
+            int course_Id,
             int studentId) {
         this.courseId = courseId;
         this.studentId = studentId;
@@ -28,7 +28,7 @@ public class LinkPurchaseId  implements Serializable {
         if (o == null || getClass() != o.getClass())
             return false;
 
-        LinkPurchaseId that = (LinkPurchaseId) o;
+        KeyId that = (KeyId) o;
         return Objects.equals(courseId, that.courseId) &&
                 Objects.equals(studentId, that.studentId);
     }
