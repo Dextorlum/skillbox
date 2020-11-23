@@ -1,18 +1,18 @@
 import javax.persistence.*;
 
-//@Entity
-//@Table(name = "LinkPurchaselist")
+@Entity
+@Table(name = "LinkPurchaselist")
 public class LinkPurchase {
 
-//    @EmbeddedId
-//    private SubscriptionId id;
+    @EmbeddedId
+    private KeyId id;
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @MapsId("studentId")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @MapsId("studentId")
     private Student student;
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @MapsId("courseId")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @MapsId("courseId")
     private Course course;
 
     public Student getStudent() {

@@ -4,8 +4,9 @@ import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.PkDrivenByDefaultMapsIdSecondPass;
 
-import java.util.List;
+import static org.hibernate.id.PersistentIdentifierGenerator.PK;
 
 public class Main {
     public static void main(String[] args) {
@@ -26,9 +27,12 @@ public class Main {
         System.out.println("Студент - " + student.getName());
         student.getCourses().forEach(el -> System.out.println(el.getName()));
         System.out.println();
-        
+
         System.out.println("Курс - " + course.getName());
         course.getStudents().forEach(el -> System.out.println(el.getName()));
+
+        Subscription subscription = session.get(Subscription.class, new KeyId(2, 1));
+        System.out.println(subscription.getCourse().getName());
 
 //        System.out.println(teacher.getName());
 //        String sql = "from " + LinkPurchase.class.getSimpleName();
