@@ -6,10 +6,10 @@ import java.util.Objects;
 @Embeddable
 public class KeyId implements Serializable {
 
-    @Column(name = "student_id")
+    @Column(name = "student_id", insertable = false, updatable = false)
     private int studentId;
 
-    @Column(name = "course_id")
+    @Column(name = "course_id", insertable = false, updatable = false)
     private int courseId;
 
     private KeyId() {}

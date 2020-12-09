@@ -31,4 +31,8 @@ public class LinkPurchase {
         this.course = course;
     }
 
+    public void setId(KeyId id) {
+        this.id = id;
+    }
+
 }

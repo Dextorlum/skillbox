@@ -1,7 +1,7 @@
 public enum CourseType {
-    DESING,
     PROGRAMMING,
-    MARKETING,
+    DESIGN,
     MANAGEMENT,
+    MARKETING,
     BUSINESS
 }
