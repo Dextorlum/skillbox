@@ -32,19 +32,15 @@ public class CardProccesor extends RecursiveTask <List<String>> {
         LinkParser linkParser = new LinkParser(url);
         List<String> links = linkParser.getSubSections();
 
-        links.add(url);
+        resultList.add(url);
+        resultList.addAll(links);
 
         for (String link : links) {
-                resultList.add(link);
                 CardProccesor task = new CardProccesor(link);
                 task.fork();
                 tasks.add(task);
         }
         addResultsFromTasks(resultList, tasks);
-
-//        for (String result : resultList) {
-//            System.out.println(result);
-//        }
 
         return resultList;
     }

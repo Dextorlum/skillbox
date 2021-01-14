@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 
 public class Main {
@@ -21,7 +22,7 @@ public class Main {
 
         ForkJoinPool pool = new ForkJoinPool();
 
-        CardProccesor skillbox = new CardProccesor("https://lenta.ru/");
+        CardProccesor skillbox = new CardProccesor("https://skillbox.ru/");
 
         pool.execute(skillbox);
         do
@@ -43,8 +44,9 @@ public class Main {
 
         pool.shutdown();
 
-        List <String> results;
+        List <String> results = new ArrayList<>();
         results = skillbox.join();
+
 
         for (String result : results) {
             System.out.println(result);
