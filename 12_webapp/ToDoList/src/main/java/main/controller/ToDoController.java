@@ -3,32 +3,71 @@ package main.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import main.model.ToDo;
+import main.model.ToDoListRepository;
 import main.model.ToDoStorage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
+@RequestMapping("todos")
 @Api(tags = "REST_API")
 public class ToDoController {
 
-    @GetMapping("/todos/")
+    @Autowired
+    private  ToDoListRepository toDoListRepository;
+
+    @GetMapping
     public List<ToDo> list(){
-        return ToDoStorage.getToDoList();
+
+        Iterable<ToDo> toDoIterable = toDoListRepository.findAll();
+
+        ArrayList<ToDo> toDoArrayList = new ArrayList<>();
+
+        for (ToDo toDo : toDoIterable) {
+            toDoArrayList.add(toDo);
+        }
+
+        return toDoArrayList;
     }
 
-    @PostMapping("/todos/")
+    @PostMapping
     public int addToDo(ToDo toDo) {
-        return ToDoStorage.addToDo(toDo);
+
+        ToDo newToDo = toDoListRepository.save(toDo);
+        return newToDo.getId();
     }
 
-    @GetMapping("/todos/{id}")
-    public ToDo getToDo(@PathVariable int id) {
-        return ToDoStorage.getToDo(id);
+    @GetMapping("{id}")
+    public ResponseEntity getToDo(@PathVariable int id) {
+        Optional<ToDo> optionalToDo = toDoListRepository.findById(id);
+
+        if (optionalToDo.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        } else {
+            return new ResponseEntity(optionalToDo.get(), HttpStatus.OK);
+        }
+    }
+    @PutMapping
+    public ResponseEntity updateToDo(ToDo toDo){
+        Optional<ToDo> optionalToDo = toDoListRepository.findById(toDo.getId());
+
+        if (optionalToDo.isPresent()){
+            toDoListRepository.save(toDo);
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+
+        }
     }
 
-    @DeleteMapping("/todos/{id}")
+    @DeleteMapping("{id}")
     public void deleteToDo(@PathVariable int id) {
-        ToDoStorage.deleteToDo(id);
+        toDoListRepository.deleteById(id);
     }
 }

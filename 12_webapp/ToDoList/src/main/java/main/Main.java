@@ -1,6 +1,5 @@
 package main;
 
-import main.config.SwaggerConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
