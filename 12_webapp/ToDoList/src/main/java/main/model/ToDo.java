@@ -1,9 +1,18 @@
 package main.model;
 
-public class ToDo {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
+public class ToDo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
     private boolean done;
+
     private String task;
 
     public int getId() {
