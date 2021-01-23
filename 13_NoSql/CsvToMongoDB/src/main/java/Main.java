@@ -1,7 +1,10 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Sorts;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -14,6 +17,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.mongodb.client.model.Aggregates.sort;
+import static com.mongodb.client.model.Filters.gt;
+
 public class Main {
     public static void main(String[] args) {
         MongoClient mongoClient = new MongoClient( "localhost" , 3678 );
@@ -21,7 +27,7 @@ public class Main {
         List<Student> students = readCsvFile("src/mongo.csv");
 
         MongoDatabase database = mongoClient.getDatabase("test");
-        database.createCollection("students");
+//        database.createCollection("students");
 
         List <Document> documents = new ArrayList<>();
         for (Student student : students) {
@@ -32,7 +38,17 @@ public class Main {
             documents.add(document);
         }
 
-        database.getCollection("students").insertMany(documents);
+        MongoCollection<Document> mongoCollection = database.getCollection("students");
+        mongoCollection.drop();
+        mongoCollection.insertMany(documents);
+
+        System.out.println("Количество студентов - " + mongoCollection.countDocuments());
+
+        Document oldestStudent = mongoCollection.aggregate(Arrays.asList(sort(Sorts.descending("age")))).first();
+
+        System.out.println("Самый старый студент - " + oldestStudent.get("name") + " Возраст - " + oldestStudent.get("age"));
+        System.out.println("Список курсор самого старого клиента - " + oldestStudent.get("courses").toString());
+        System.out.println("Количество студентов старше 40 " + mongoCollection.countDocuments(gt("age", "40")));
     }
 
 
